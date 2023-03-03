@@ -1,5 +1,9 @@
 created: 20230303021726362
-modified: 20230303021739771
+modified: 20230303035546287
 tags: 
 title: 信息量
 type: text/vnd.tiddlywiki
+
+信息量的思考通过概率和不确定性的概念
+
+“几次”问题通过总信息量和单次测量获得信息量相除
