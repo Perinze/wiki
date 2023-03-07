@@ -1,5 +1,9 @@
 created: 20230303021742004
-modified: 20230303021757797
+modified: 20230307005608252
 tags: 
 title: 熵
 type: text/vnd.tiddlywiki
+
+$$I(x_k, y_j) = I(x_k) + I(y_j|x_k)$$
+
+$$H(XY) = H(X) + H(Y|X)$$

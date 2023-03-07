@@ -1,0 +1,15 @@
+created: 20230307004401083
+modified: 20230307005008226
+tags: 
+title: 条件熵
+type: text/vnd.tiddlywiki
+
+条件熵公式
+
+$$H(X|Y)=\sum_j P(y_j) H(X|Y=y_j)
+$$
+相当于对每个$$y_j$$的熵做加权平均
+
+$$H(X|Y=y_j) = \sum_k P(x_k|y_j) log \frac1{P(x_k|y_j)}
+$$
+是对于某个$$y_j$$而言的熵
