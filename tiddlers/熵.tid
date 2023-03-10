@@ -1,5 +1,5 @@
 created: 20230303021742004
-modified: 20230307005608252
+modified: 20230307011934119
 tags: 
 title: 熵
 type: text/vnd.tiddlywiki
@@ -7,3 +7,9 @@ type: text/vnd.tiddlywiki
 $$I(x_k, y_j) = I(x_k) + I(y_j|x_k)$$
 
 $$H(XY) = H(X) + H(Y|X)$$
+
+$$I(X;Y) = H(X) - H(X|Y)$$
+
+$$I(X;Y) = I(Y;X)$$
+
+$$I(X;Y) \geq 0$$
