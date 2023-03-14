@@ -1,0 +1,10 @@
+created: 20230314002208204
+modified: 20230314002447090
+tags: 
+title: 信息含量效率/冗余度
+type: text/vnd.tiddlywiki
+
+$$ \eta = \frac{H(X)}{H_{max}(X)}, H_{max}(X) = log 2
+$$
+$$\gamma = 1 - \eta
+$$
