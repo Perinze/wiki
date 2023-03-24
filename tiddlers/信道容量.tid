@@ -1,0 +1,9 @@
+created: 20230324021953817
+modified: 20230324022123942
+tags: 
+title: 信道容量
+type: text/vnd.tiddlywiki
+
+等于互信息量最大值，即C = max I(X;Y)
+
+I(X;Y) = H(X) - H(X|Y) = H(Y) - H(Y|X)
