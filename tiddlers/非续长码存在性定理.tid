@@ -1,0 +1,12 @@
+created: 20230331033706560
+modified: 20230331033934855
+tags: 
+title: 非续长码存在性定理
+type: text/vnd.tiddlywiki
+
+Kraft不等式
+
+$$\sum_{i=1}^q r^{-l_i} \leq 1
+$$
+
+满足Kraft一定可以构造非续长码
