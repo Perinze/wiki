@@ -1,0 +1,21 @@
+created: 20230405102316745
+modified: 20230405102323539
+tags: dsp
+title: FIR
+type: text/vnd.tiddlywiki
+
+!! 线性相位
+!!! 充要条件
+时域：$$h[k] = \pm h[M-k]$$
+
+z域：$$H(z) = \pm z^{-M}H(z^{-1})$$
+
+$$H(z) = \sum_{k=0}^M h[k]z^{-k}, N = M + 1$$
+
+M为FIR阶数，N为h[k]长度
+
+!! 滤波器设计
+!!! 窗函数法
+阻带衰减、过渡带宽度
+
+!!! 频率取样法

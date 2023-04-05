@@ -1,0 +1,23 @@
+created: 20230405102221350
+modified: 20230405102234412
+tags: dsp
+title: DFS
+type: text/vnd.tiddlywiki
+
+!!! IDFS
+$$x[k] = \frac1N\sum_{m=0}^{N-1}X[m]e^{j\Omega_0mk}$$
+
+!!! DFS
+$$X[m] = \sum_{k=0}^{N-1}e^{-j\Omega_0mk}$$
+
+!!! 算子
+如果$$\Omega_0 = \frac{2\pi}{N}$$，
+
+则$$W_N = e^{-j\frac{2\pi}{N}}$$，
+
+$$W_N^{mk} = e^{-j\frac{2\pi}{N}mk}$$
+
+!!! 特性
+# 实序列 -> 频域偶对称
+# $$x_1[k] * x_2[k]$$ <-> $$X_1[m] X_2[m]$$
+# $$x_1[k] x_2[k]$$ <-> $$\frac1N X_1[m] * X_2[m]$$

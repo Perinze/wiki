@@ -1,0 +1,16 @@
+created: 20230405102335009
+modified: 20230405102342529
+tags: dsp
+title: IIR
+type: text/vnd.tiddlywiki
+
+!! 模拟转数字
+!!! 频率响应不变法
+思想：H(s) -> h(t) -> h[k] -> H(z)，时域逼近
+
+$$s_i$$ -> $$z^{s_iT}$$
+
+!!! 双线性变换法
+思想：利用arctan解决频谱混叠问题
+
+$$s = \frac2T \frac{1-z^{-1}}{1+z^{-1}}$$

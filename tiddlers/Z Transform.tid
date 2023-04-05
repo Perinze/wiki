@@ -1,0 +1,19 @@
+created: 20230405102247956
+modified: 20230405102259735
+tags: dsp
+title: Z Transform
+type: text/vnd.tiddlywiki
+
+!!! Z变换
+$$X(z) = \sum_{k=-\infty}^{+\infty}x[k]z^{-k}$$
+
+!!! Z逆变换
+!!!! 留数法
+$$a^k u[k]$$ <-> $$\frac1{1-az^{-1}}$$
+
+$$-b^k u[-k-1]$$ <-> $$\frac1{1-bz^{-1}}$$
+
+按照有理分式拆分，枚举ROC即可
+
+!!! 系统函数与系统频率响应
+$$H(e^{j\Omega}) = H(z)|_{z=e^{j\Omega}}$$

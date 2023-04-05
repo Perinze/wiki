@@ -1,0 +1,13 @@
+created: 20230405102143176
+modified: 20230405102205811
+tags: dsp
+title: Butter Worth
+type: text/vnd.tiddlywiki
+
+$$|H(j\omega)|^2 = \frac1{1 + (\omega / \omega_c)^{2N}}$$
+
+$$N$$: 滤波器阶数
+
+$$\omega_c$$: 3dB截频
+
+$$N \geq \frac{lg\frac{10^{0.1A_p} - 1}{10^{0.1A_s}-1}}{2lg(\omega_p/\omega_s)}$$

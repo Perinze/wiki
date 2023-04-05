@@ -1,0 +1,7 @@
+created: 20230405102901470
+modified: 20230405102933458
+tags: numpy
+title: 矩阵乘法
+type: text/vnd.tiddlywiki
+
+matmul(A, B)
