@@ -1,14 +1,14 @@
 created: 20230405103059993
-modified: 20230405104401920
+modified: 20230406034644862
 tags: info_theory numpy
 title: 信息论numpy计算
 type: text/vnd.tiddlywiki
 
 
-<<<
+```python
 # self information
 self_info = lambda p: -np.log2(p)
 
 # entropy
 entropy = lambda ps: np.sum(ps * self_info(ps))
-<<<
+```
