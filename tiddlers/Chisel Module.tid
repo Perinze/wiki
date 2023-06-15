@@ -1,0 +1,13 @@
+created: 20230615030041797
+modified: 20230615031637347
+tags: chisel
+title: Chisel Module
+type: text/vnd.tiddlywiki
+
+```scala
+val foo = Module(new Mux2())
+```
+
+'Module' instantiate its object arg as module definition.
+
+'Mux2' is a module definition.

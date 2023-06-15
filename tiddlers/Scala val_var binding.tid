@@ -1,0 +1,9 @@
+created: 20230615034326639
+modified: 20230615034427309
+tags: scala
+title: Scala val/var binding
+type: text/vnd.tiddlywiki
+
+```scala
+val a :: b :: c :: Nil = List(1, 2, 3)
+```

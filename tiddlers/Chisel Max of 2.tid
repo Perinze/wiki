@@ -1,0 +1,9 @@
+created: 20230615035158452
+modified: 20230615035221747
+tags: chisel
+title: Chisel Max of 2
+type: text/vnd.tiddlywiki
+
+```scala
+a.max(b)
+```

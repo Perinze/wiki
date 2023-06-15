@@ -1,0 +1,19 @@
+created: 20230615032344911
+modified: 20230615034320104
+tags: chisel
+title: Chisel when
+type: text/vnd.tiddlywiki
+
+'when' is a hardware builder. For example,
+
+```scala
+when (en) { y := x }
+```
+
+generate hardware like
+
+```verilog
+assign y = en & x;
+```
+
+(to be verified)

@@ -1,0 +1,21 @@
+created: 20230615031141373
+modified: 20230615032218537
+tags: chisel
+title: Chisel Hardware Builder - Scala Function
+type: text/vnd.tiddlywiki
+
+Scala function can be hardware builder
+
+```scala
+val x = RegInit(...)
+x := wrap_around(x + amt, max)
+```
+
+The ':=' connects rhs output to lhs input,
+
+and '+' is an adder with its operands as adder's inputs.
+
+x, amt and max are all hardware instance,
+
+wrap_around just wraps these to a single module.
+

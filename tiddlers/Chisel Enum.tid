@@ -1,0 +1,11 @@
+created: 20230615034433996
+modified: 20230615034531548
+tags: chisel
+title: Chisel Enum
+type: text/vnd.tiddlywiki
+
+Enum(n) creates n states for FSM.
+
+```scala
+val sIDLE :: s1 :: s2 :: s3 :: sOK :: Nil = Enum(5)
+```
