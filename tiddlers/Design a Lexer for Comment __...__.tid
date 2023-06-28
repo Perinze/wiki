@@ -1,0 +1,52 @@
+created: 20230628133717044
+modified: 20230628143508247
+tags: compiler lexer dfa regex
+title: Design a Lexer for Comment /*...*/
+type: text/vnd.tiddlywiki
+
+This note comes from a buggy lexer:
+
+```ocamllex
+rule token = parse
+    [' ' '\t']      { token lexbuf }
+  | '\n'            { Lexing.new_line lexbuf; token lexbuf }
+  | "/*" _* "*/"    { token lexbuf }
+	...
+```
+
+This lexer is buggy because //_*// is greedy. Consider the code below, 
+
+```tiger
+/* define a recursive function */
+let
+/* calculate n! */
+function nfactor(n: int): int =
+		if  n = 0 
+			then 1
+			else n * nfactor(n-1)
+in
+	nfactor(10)
+end
+```
+
+tokens produced by above lexer contain no token LET, because lexer treats the first three lines as a whole comment.
+This happens because the rule is ambiguous, although it may work if it is non-greedy.
+The key to fix this is designing a unambiguous rule.
+
+Consider the pseudo-regex below,
+
+```
+"/*" [^"*/"]* "*/"
+```
+
+we need to break down the middle "*/" to legal regex.
+The legal regex is below,
+
+```
+"/*" ([^'*']|('*'+[^'*''/']))* '*'+ '/'
+```
+
+Regex in the middle parenthese match strings not containing "*/".
+
+If getting confused, try to draw a DFA.
+Remember to cover every case a state could transfer.
