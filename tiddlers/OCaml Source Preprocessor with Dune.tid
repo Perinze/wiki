@@ -1,0 +1,21 @@
+created: 20230703075205443
+modified: 20230703080000967
+tags: compiler ocaml preprocess dune
+title: OCaml Source Preprocessor with Dune
+type: text/vnd.tiddlywiki
+
+The stanza to apply preprocessing on the source file is ''(preprocess (action (&lt;action&gt;)))''.
+
+The ''&lt;action&gt;'' part can be any user-defined action,
+such as the call to an external program, as specified by ''(system &lt;program&gt;)''.
+
+```
+(executable
+ (name main)
+ (preprocess
+  (action
+   (system "./preprocessor.sh %{input-file}"))))
+```
+
+references: 
+https://ocaml.org/docs/metaprogramming

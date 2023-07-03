@@ -1,0 +1,30 @@
+created: 20230703074550874
+modified: 20230703075434361
+tags: ocaml preprocess compiler
+title: OCaml Source Preprocessor
+type: text/vnd.tiddlywiki
+
+preprocessor.sh
+
+```sh
+#!/bin/sh
+
+sed 's/World/Universe/g' $1
+```
+
+hello.ml
+
+```ocaml
+print_endline "Hello, World!";;
+```
+
+Compilation with preprocessing
+
+```sh
+$ ocamlopt -pp preprocessor.sh hello.ml
+$ ./a.out
+Hello, Universe!
+```
+
+references:
+https://ocaml.org/docs/metaprogramming

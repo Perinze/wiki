@@ -1,5 +1,5 @@
 created: 20230628133717044
-modified: 20230628143508247
+modified: 20230703075246882
 tags: compiler lexer dfa regex
 title: Design a Lexer for Comment /*...*/
 type: text/vnd.tiddlywiki
