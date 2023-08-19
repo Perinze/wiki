@@ -1,0 +1,11 @@
+created: 20230819163926726
+modified: 20230819164234181
+tags: linux kernel
+title: Linux Kernel Learning TODO
+type: text/vnd.tiddlywiki
+
+1. How does driver work?
+
+2. Run a kernel in VM.
+
+3. Debug kernel to find out how keyboard/mouse driver works.
