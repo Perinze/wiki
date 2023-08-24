@@ -1,5 +1,5 @@
 created: 20230824070828538
-modified: 20230824085611371
+modified: 20230824085757489
 tags: linux kernel
 title: LKD 第4章 进程调度
 type: text/vnd.tiddlywiki
@@ -96,4 +96,8 @@ Linux不同于其他大多数Unix，它支持内核抢占。如果没有内核�
 
 这些原来是可以设置的，不过普通进程不能设置负的nice值，超级用户可以。绑定处理器也可以设置。用户也可以主动放弃处理器，通过调用sched_yield()。
 
-看完书再去看https://www.zhihu.com/question/35484429/answer/62964898，能够有一个历史认知。
+!! 参考
+
+1. 看完书再去看https://www.zhihu.com/question/35484429/answer/62964898，能够有一个历史认知。
+
+2. 看了一些http://www.wowotech.net/process_management/448.html的详解。
