@@ -1,0 +1,131 @@
+created: 20230828055952858
+modified: 20230828075357464
+tags: linux kernel
+title: LKD 第7章 中断和中断处理
+type: text/vnd.tiddlywiki
+
+!! 7.1 中断
+
+硬件由硬件生成，依次送入中断控制器、处理器和操作系统。不同设备对应的中断不同，而每个中断都通过一个唯一的数字标识。os给不同中断提供对应的中断处理程序。这些中断值通常称为中断请求（IRQ）线。
+
+异常是由处理器本身产生的同步中断，与中断差异只在于由软件引起。
+
+!! 7.2 中断处理程序
+
+内核响应特定中断时会执行一个中断处理程序（interrupt handler），这个函数与其他内核函数区别在于其运行在中断上下文，也称原子上下文，不可阻塞。
+
+!! 7.3 上半部和下半部的对比
+
+简而言之，上半部做严格时限的工作，下半部做允许稍后完成的工作。
+
+!! 7.4 注册中断处理程序
+
+驱动程序可以通过request_irq()注册一个中断处理程序（声明在<linux/interrupt.h>中）：
+
+`
+typedef irqreturn_t (*irq_handler_t)(int, void *);
+
+int request_irq(unsigned int irq,
+                 irq_handler_t handler,
+								 unsigned long flags,
+								 const char *name,
+								 void *dev)
+`
+
+!!! 7.4.1 中断处理程序标志
+
+linux/interrupt.h开头定义。request_irq()成功执行会返回0，否则不会注册，例如-EBUSY，表示给定中断线已经在使用（或未指定IRQF_SHARED）。request_irq()可能会睡眠，因此不能在中断上下文或其他不允许阻塞的代码中调用该函数。
+
+!!! 7.4.2 一个中断例子
+
+`
+if (request_irq(irqn, my_interrupt, IRQF_SHARED, "my_device", my_dev)) {
+		printk(KERN_ERR "my_device: cannot register IRQ %d\n", irqn);
+		return -EIO;
+}
+`
+
+注意要先完成设备初始化再注册中断处理程序。
+
+!!! 7.4.3 释放中断处理程序
+
+`
+void free_irq(unsigned int irq, void *dev)
+`
+
+!! 7.5 编写中断处理程序
+
+`
+static irqreturn_t intr_handler(int irq, void *dev)
+`
+
+dev用于在同一中断线上唯一确定设备。
+
+中断处理程序可能返回两个特殊的值：IRQ_NONE和IRQ_HANDLED，前者意味着中断对应设备并不是注册期间指定的产生源，后者反之。可以使用宏RETVAL(val)，val非0时返回IRQ_HANDLED。
+
+Linux的中断处理程序无需重入，因为handler执行期间相应中断线在所有CPU上都会屏蔽掉（通常其他中断都是打开的）。所以同一handler绝不会被同时调用以处理嵌套的中断。
+
+!!! 7.5.1 共享的中断处理程序
+
+1. flags必须设置IRQF_SHARED。
+2. 每个handler的dev必须唯一，不能是NULL。
+3. handler必须能够区分它的设备是否真的产生了中断。这同时需要硬件支持和handler中相关逻辑。
+
+内核接收一个中断后，它将依次调用在该中断线上注册的每个handler，所以一个handler必须知道它是否应该为这个中断负责，不是的话应立即退出。
+
+!!! 7.5.2 handler实例
+
+看书，以及<driver/char/rtc.c>中rtc_init()和rtc_interrupt()。
+
+!! 7.6 中断上下文
+
+首先讨论什么是进程上下文：此时内核代表进程执行————例如，执行syscall或内核进程。可以用current宏关联当前进程。因为进程是以进程上下文的形式连接到内核中，因此可以睡眠也可以调用调度程序。
+
+中断上下文与进程没什么瓜葛，与current宏也不相干。因为没有后备进程，中断上下文不可以睡眠，否则又怎能再对它重新调度呢？（回想第4章进程调度的原理，要将进程加入等待队列，但是中断上下文没有进程）2.6内核为中断提供了专门的栈，请节约栈空间。
+
+!! 7.7 中断处理机制的实现
+
+因为中断依赖CPU、中断控制器类型、体系结构设计和机器本身，中断处理系统在Linux中实现很依赖于体系结构。见P100图。
+
+对于每条中断线，CPU都会跳到''对应的唯一的位置''（也就是说不同中断线跳到不同的位置）。于是内核可以知道中断的IRQ号。初始入口点分别在栈中保存这个IRQ号（为了之后的中断处理）以及当前寄存器的值（属于被中断的任务）；然后调用do_IRQ()。
+
+`unsigned int do_IRQ(struct pt_regs regs)`
+
+之前压栈的IRQ号和寄存器值会被当作struct pt_regs接收。do_IRQ()根据提取出的IRQ号，对接收的中断进行应答，禁止这条线上的中断传递。接下来，do_IRQ()需要确保这条线上有一个有效的handler，enabled but not running。如果是这样，do_IRQ()就调用handle_IRQ_event()来运行为中断线安装的handler，handle_IRQ_event()定义在kernel/irq/handler.c中。
+
+!! 7.8 /proc/interrupts
+
+procfs是一个虚拟fs，只存在于内核内存，一般安装于/proc。/proc/interrupts存放系统中与中断相关的统计信息，包含IRQ号、接收中断数目的计数器。
+
+procfs代码位于fs/proc。
+
+!! 7.9 中断控制
+
+Linux提供了一组接口用于操作中断状态，或是禁止当前处理器的中断系统，或是屏蔽掉整个机器的一条中断线，可以在<asm/system.h>和<asm/irq.h>中找到。
+
+控制中断系统的原因归根结底是需要提供同步，可以避免handler不会抢占当前代码，也可以禁止内核抢占。而其他处理器的并发访问需要其他的保护机制。
+
+!!! 7.9.1 禁止和激活中断
+
+禁止当前处理器以及激活：
+
+`
+local_irq_disable();
+local_irq_enable();
+`
+
+通过不同调用链后需要获取中断系统的状态：
+
+`
+unsigned long flags;
+local_irq_save(flags);
+local_irq_restore(flags);
+`
+
+这两个函数必须要在同一个函数进行（原因P104）。
+
+前面所有函数既可以在中断中调用，也可以在进程上下文中调用。
+
+!!! 7.9.2 禁止指定中断线 7.9.3 中断系统的状态
+
+懒得抄了，P105。
