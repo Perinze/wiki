@@ -1,0 +1,7 @@
+created: 20230819164306339
+modified: 20230819164502234
+tags: linux kernel
+title: Tips
+type: text/vnd.tiddlywiki
+
+1. Without debugging, it's hard to understand how code snippets in large system actually work.
